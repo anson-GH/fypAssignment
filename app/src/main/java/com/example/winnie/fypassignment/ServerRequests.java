@@ -65,6 +65,7 @@ public class ServerRequests {
             dataToSend.add(new BasicNameValuePair("password", user.password));
             dataToSend.add(new BasicNameValuePair("age", user.age +""));
             dataToSend.add(new BasicNameValuePair("name", user.name));
+            dataToSend.add(new BasicNameValuePair("email", user.email));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
@@ -126,8 +127,9 @@ public class ServerRequests {
                 } else {
                       String name = jObject.getString("name");
                      int age = jObject.getInt("age");
+                    String email = jObject.getString("email");
 
-                    returnedUser = new User(user.username, user.password,age,name);
+                    returnedUser = new User(user.username, user.password,age,name,email);
 
                 }
             } catch (Exception e) {

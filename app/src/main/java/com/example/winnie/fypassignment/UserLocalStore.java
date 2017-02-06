@@ -23,6 +23,8 @@ public class UserLocalStore {
         userLocalDatabaseEditor.putString("username", user.username);
         userLocalDatabaseEditor.putString("password", user.password);
         userLocalDatabaseEditor.putInt("age", user.age);
+        userLocalDatabaseEditor.putString("email", user.email);
+
         userLocalDatabaseEditor.commit();
     }
 
@@ -47,8 +49,10 @@ public class UserLocalStore {
         String username = userLocalDatabase.getString("username", "");
         String password = userLocalDatabase.getString("password", "");
         int age = userLocalDatabase.getInt("age", -1);
+        String email = userLocalDatabase.getString("email", "");
 
-        User user = new User(username, password, age, name);
+
+        User user = new User(username, password, age, name,email);
         return user;
     }
 }

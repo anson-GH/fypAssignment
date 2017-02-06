@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class MainActivity  extends ActionBarActivity implements View.OnClickListener {
     Button bLogout;
-    EditText etUsername, etPassword,etAge,etName;
+    EditText etUsername, etPassword,etAge,etName,etMail;
     UserLocalStore userLocalStore;
 
     @Override
@@ -23,6 +23,7 @@ public class MainActivity  extends ActionBarActivity implements View.OnClickList
         etPassword = (EditText) findViewById(R.id.etPassword);
         etAge = (EditText) findViewById(R.id.etAge);
         etName = (EditText) findViewById(R.id.etName);
+        etMail = (EditText) findViewById(R.id.etEmail);
 
         bLogout = (Button) findViewById(R.id.bLogout);
 
@@ -54,7 +55,7 @@ private boolean authenticate() {
         etPassword.setText(user.password);
         etAge.setText(user.age +"");
         etName.setText(user.name);
-
+        etMail.setText(user.email);
     }
 
     @Override
