@@ -30,7 +30,27 @@ tools:context="com.example.winnie.fypassignment.RegisterActivity">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:inputType="textPassword" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Age" />
 
+    <EditText
+        android:id="@+id/etAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 <Button
     android:id="@+id/bRegister"
     android:layout_width="match_parent"

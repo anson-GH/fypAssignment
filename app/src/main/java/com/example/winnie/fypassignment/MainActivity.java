@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity  extends ActionBarActivity implements View.OnClickListener {
     Button bLogout;
-    EditText etUsername, etPassword;
+    EditText etUsername, etPassword,etAge,etName;
     UserLocalStore userLocalStore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,8 @@ public class MainActivity  extends ActionBarActivity implements View.OnClickList
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
+        etAge = (EditText) findViewById(R.id.etAge);
+        etName = (EditText) findViewById(R.id.etName);
 
         bLogout = (Button) findViewById(R.id.bLogout);
 
@@ -30,19 +34,26 @@ public class MainActivity  extends ActionBarActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-        if (authenticate()==true){
+        if (authenticate() == true) {
             displayUserDetails();
+
         }
     }
-
-    private boolean authenticate(){
-        return userLocalStore.getUserLoggedIn();
+private boolean authenticate() {
+    if (userLocalStore.getLoggedInUser() == null) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        return false;
     }
+    return true;
+}
 
     private void displayUserDetails(){
         User user = userLocalStore.getLoggedInUser();
         etUsername.setText(user.username);
         etPassword.setText(user.password);
+        etAge.setText(user.age +"");
+        etName.setText(user.name);
 
     }
 

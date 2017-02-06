@@ -1,6 +1,7 @@
 package com.example.winnie.fypassignment;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,8 @@ import android.widget.EditText;
 public class RegisterActivity extends ActionBarActivity implements View.OnClickListener  {
 
     Button bRegister;
-    EditText etUsername, etPassword;
+    EditText etUsername, etPassword,etName,etAge;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +22,8 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
+        etAge = (EditText) findViewById(R.id.etAge);
+        etName = (EditText) findViewById(R.id.etName);
         bRegister = (Button) findViewById(R.id.bRegister);
 
         bRegister.setOnClickListener(this);
@@ -30,14 +34,28 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
         switch (view.getId()){
             case R.id.bRegister:
 
-                String name = etUsername.getText().toString();
+                String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+                    int age = Integer.parseInt(etAge.getText().toString());
+                String name = etName.getText().toString();
 
-                User registerData = new User(name,password);
 
+                User user = new User( username, password,age,name);
+
+                registerUser(user);
                 break;
         }
 
+    }
+
+    private void registerUser(User user){
+        ServerRequests serverRequests = new ServerRequests(this);
+        serverRequests.storeUserDataInBackground(user, new GetUserCallBack() {
+            @Override
+            public void done(User returnedUser) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            }
+        });
     }
 }
 

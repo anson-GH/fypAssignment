@@ -2,6 +2,7 @@ package com.example.winnie.fypassignment;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,10 +40,17 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bLogin:
-                User user = new User(null,null);
-                userLocalStore.storeUserData(user);
-                userLocalStore.setUserLoggedIn(true);
 
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+
+                User user = new User(username,password);
+
+                authenticate(user);
+
+
+              userLocalStore.storeUserData(user);
+              userLocalStore.setUserLoggedIn(true);
 
                 break;
 
@@ -51,7 +59,35 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 break;
         }
 
+    }
+
+    private void authenticate(User user){
+            ServerRequests serverRequests = new ServerRequests(this);
+        serverRequests.fetchUserDataInBackground(user, new GetUserCallBack() {
+            @Override
+            public void done(User returnedUser) {
+            if(returnedUser==null){
+                showErrorMessage();
+            }else{
+                logUserIn(returnedUser);
+            }
+            }
+        });
 
     }
+
+        private void showErrorMessage(){
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+            dialogBuilder.setMessage("Incorrect user details");
+            dialogBuilder.setPositiveButton("OK",null);
+            dialogBuilder.show();
+        }
+        private void logUserIn(User returnedUser){
+            userLocalStore.storeUserData(returnedUser);
+            userLocalStore.setUserLoggedIn(true);
+            startActivity(new Intent(this, MainActivity.class));
+
+
+        }
 }
 
