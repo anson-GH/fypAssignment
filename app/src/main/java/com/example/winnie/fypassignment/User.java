@@ -23,6 +23,11 @@ public class User {
         this.age = -1;
         this.name = "";
         this.email = "";
+    }
 
+    public User(String email,String username,String password){
+        this.email = email;
+        this.username = username;
+        this.password = password;
     }
 }

@@ -16,7 +16,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     Button bLogin;
     EditText etUsername, etPassword;
-    TextView tvRegisterLink;
+    TextView tvRegisterLink,tvForgotPassword;
     UserLocalStore userLocalStore;
 
     @Override
@@ -27,11 +27,13 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
+        tvForgotPassword = (TextView) findViewById(R.id.tvForgotPassword);
 
         bLogin = (Button) findViewById(R.id.bLogin);
 
         bLogin.setOnClickListener(this);
         tvRegisterLink.setOnClickListener(this);
+        tvForgotPassword.setOnClickListener(this);
         userLocalStore = new UserLocalStore(this);
 
     }
@@ -56,6 +58,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
             case R.id.tvRegisterLink:
                 startActivity(new Intent(this, RegisterActivity.class));
+                break;
+            case R.id.tvForgotPassword:
+                startActivity(new Intent(this, ForgetpasswordActivity.class));
                 break;
         }
 
