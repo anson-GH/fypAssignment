@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -100,8 +101,14 @@ public class SendMail extends AsyncTask<String, String, String> {
                 mm.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
                 //Adding subject
                 mm.setSubject(subject);
+
                 //Adding message
-                mm.setText(message);
+                mm.setContent("<span style=\"color:#0078D7;font-size:40px\">Password recovery</span><br/><br/>Hello "+message+",<br/><br/>" +
+                        "We have received a request to reset your old password at socialtainment.com." +
+                        " <br/> <br/>In order to change your password, click the link below:" +
+                        " <br/> <br/>Reset My Password (<a href=\"http://192.168.0.7/recovery.aspx?email="+email+" \" style=\"color:#0078D7\">http://192.168.0.7/recovery.aspx</a>)" +
+                        " <br/> <br/>If you have not made any password reset request, it is likely that another user entered your email address by mistake and you can simply disregard this email." +
+                        " <br/> <br/>Thanks, <br/>Tunku Abdul Rahman University College" , "text/html");
 
                 //Sending email
                 Transport.send(mm);
@@ -114,6 +121,8 @@ public class SendMail extends AsyncTask<String, String, String> {
 
         return null;
     }
+
+
 
 
 }

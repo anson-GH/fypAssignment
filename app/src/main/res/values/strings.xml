@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">fypAssignment</string>
     <string name="title_activity_login">LoginActivity</string>
+
+          <string name="nice_html">
+                <![CDATA[
+                        <span style="color:#0078D7;font-size:40px">Password recovery</span>
+                <span style="color:#0078D7;font-size:40px">Password recovery</span>
+                        <p>Hello</p>
+                ]]>
+                </string>
 </resources>
