@@ -3,6 +3,7 @@ package com.example.winnie.fypassignment;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ public class ForgetpasswordActivity extends ActionBarActivity  implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgetpassword);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         bSubmit = (Button) findViewById(R.id.bSubmit);
         etEmailRecovery = (EditText) findViewById(R.id.etEmailRecovery);
 
@@ -31,6 +35,7 @@ public class ForgetpasswordActivity extends ActionBarActivity  implements View.O
 
     }
     public void onClick(View view) {
+
         switch (view.getId()){
             case R.id.bSubmit:
 
@@ -43,7 +48,9 @@ public class ForgetpasswordActivity extends ActionBarActivity  implements View.O
                     @Override
                     public void done(User user) {
                         if(user==null){
-                            Toast.makeText(ForgetpasswordActivity.this, "Invalid email!",Toast.LENGTH_LONG).show();
+                            etEmailRecovery.setError("Please enter valid password");
+
+                            // Toast.makeText(ForgetpasswordActivity.this, "Invalid email!",Toast.LENGTH_LONG).show();
                         }else{
 
                             sendEmail(user.email,user.username);

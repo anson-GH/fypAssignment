@@ -1,17 +1,22 @@
 package com.example.winnie.fypassignment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextClock;
 import android.widget.TextView;
 
-public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
+public class LoginActivity extends ActionBarActivity  implements View.OnClickListener {
 
 
     Button bLogin;
@@ -22,6 +27,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+// hidden title bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+
         setContentView(R.layout.activity_login);
 
         etUsername = (EditText) findViewById(R.id.etUsername);
@@ -82,10 +92,14 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     }
 
         private void showErrorMessage(){
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
-            dialogBuilder.setMessage("Incorrect user details");
-            dialogBuilder.setPositiveButton("OK",null);
-            dialogBuilder.show();
+//            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
+//            dialogBuilder.setMessage("Incorrect user details");
+//            dialogBuilder.setPositiveButton("OK",null);
+//            dialogBuilder.show();
+
+            etUsername.setError("Please enter valid username");
+            etPassword.setError("Please enter valid password");
+
         }
         private void logUserIn(User returnedUser){
             userLocalStore.storeUserData(returnedUser);
@@ -94,5 +108,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
 
         }
+
 }
 

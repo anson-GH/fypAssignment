@@ -115,7 +115,12 @@ try{
            mProgress.dismiss();
                 Toast.makeText(ProfileActivity.this ,"Your phone not support.", Toast.LENGTH_LONG).show();
 
-            }
+            } catch (Exception e) {
+// Do nothing for now
+                    mProgress.dismiss();
+                    Toast.makeText(ProfileActivity.this ,"Your phone not support.", Toast.LENGTH_LONG).show();
+
+                }
         }
         }
         if (resultCode == RESULT_OK && requestCode == GALLERY_PICTURE) {

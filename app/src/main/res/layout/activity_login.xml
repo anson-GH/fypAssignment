@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/activity_login"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
-android:padding="10dp"
-tools:context="com.example.winnie.fypassignment.LoginActivity">
+    tools:context="com.example.winnie.fypassignment.LoginActivity"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bglogin"
+        android:alpha="0.8"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="320dp"
+        android:padding="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+        android:background="@drawable/bg"
+        android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/m_tarc"
+        android:id="@+id/imageView2"
+        />
 
 
 <TextView
@@ -18,7 +45,11 @@ tools:context="com.example.winnie.fypassignment.LoginActivity">
     android:id="@+id/etUsername"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp" />
+    android:background="@drawable/apptheme_edit_text_holo_light"
+    android:layout_marginBottom="10dp"
+    android:textCursorDrawable="@drawable/color_cursor"
+
+    android:textSize="16dp"/>
 
 <TextView
     android:layout_width="wrap_content"
@@ -29,26 +60,47 @@ tools:context="com.example.winnie.fypassignment.LoginActivity">
     android:id="@+id/etPassword"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:inputType="textPassword" />
+    android:background="@drawable/apptheme_edit_text_holo_light"
+    android:textCursorDrawable="@drawable/color_cursor"
+    android:inputType="textPassword"
+    android:textSize="16dp"/>
 
 <Button
     android:id="@+id/bLogin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Login" />
+    android:text="Sign in" />
 
 <TextView
     android:id="@+id/tvRegisterLink"
     android:layout_gravity="center_horizontal"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
+    android:visibility="gone"
     android:text="Register here" />
 
     <TextView
         android:id="@+id/tvForgotPassword"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:text="Forgot Password" />
-</LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:textSize="12dp"
+        android:text="Version (1.0) Build 3.4.1" />
+
+
+</RelativeLayout>
