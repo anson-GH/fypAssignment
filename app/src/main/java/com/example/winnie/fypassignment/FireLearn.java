@@ -8,7 +8,7 @@ import android.app.Application;
 
 public class FireLearn extends Application {
 
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
     }
 

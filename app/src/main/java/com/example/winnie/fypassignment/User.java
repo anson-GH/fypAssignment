@@ -6,28 +6,29 @@ package com.example.winnie.fypassignment;
 
 public class User {
 
-    String  name, username, password,email;
-    int age;
-    public User(String username,String password,int age, String name,String email){
+    String firebaseid, username, password, email;
+
+
+
+    public User(String username, String password, String email,String firebaseid) {
         this.username = username;
         this.password = password;
-        this.age = age;
-        this.name = name;
+        this.firebaseid = firebaseid;
         this.email = email;
 
     }
 
-    public User(String username,String password){
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.age = -1;
-        this.name = "";
+        this.firebaseid = "";
         this.email = "";
     }
 
-    public User(String email,String username,String password){
+    public User(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
+
     }
 }

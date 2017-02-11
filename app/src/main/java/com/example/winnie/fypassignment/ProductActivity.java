@@ -15,22 +15,22 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.util.HashMap;
 
-public class ProductActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener
-{
+public class ProductActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
-    SliderLayout sliderLayout ;
+    SliderLayout sliderLayout;
 
-    HashMap<String, String> HashMapForURL ;
+    HashMap<String, String> HashMapForURL;
 
     // HashMap<String, Object> HashMapForLocalRes ;
 
     ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        sliderLayout = (SliderLayout)findViewById(R.id.slider);
+        sliderLayout = (SliderLayout) findViewById(R.id.slider);
 
         //Call this method if you want to add images from URL .
         AddImagesUrlOnline();
@@ -42,7 +42,7 @@ public class ProductActivity extends AppCompatActivity implements BaseSliderView
         //sliderLayout.stopAutoCycle();
 
 
-        for(String name : HashMapForURL.keySet()){
+        for (String name : HashMapForURL.keySet()) {
 
             TextSliderView textSliderView = new TextSliderView(ProductActivity.this);
 
@@ -55,7 +55,7 @@ public class ProductActivity extends AppCompatActivity implements BaseSliderView
             textSliderView.bundle(new Bundle());
 
             textSliderView.getBundle()
-                    .putString("extra",name);
+                    .putString("extra", name);
 
             sliderLayout.addSlider(textSliderView);
         }
@@ -81,11 +81,12 @@ public class ProductActivity extends AppCompatActivity implements BaseSliderView
     @Override
     public void onSliderClick(BaseSliderView slider) {
 
-        Toast.makeText(this,slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
 
     @Override
     public void onPageSelected(int position) {
@@ -99,7 +100,7 @@ public class ProductActivity extends AppCompatActivity implements BaseSliderView
 
     }
 
-    public void AddImagesUrlOnline(){
+    public void AddImagesUrlOnline() {
 //
         HashMapForURL = new HashMap<String, String>();
 //
@@ -110,15 +111,9 @@ public class ProductActivity extends AppCompatActivity implements BaseSliderView
         //  HashMapForURL.put("GingerBread", "https://firebasestorage.googleapis.com/v0/b/ansonproject-4a171.appspot.com/o/background.png?alt=media&token=61cb1d02-5709-4dbf-a664-5316ef9b7a11");
 
 
-
-
-
-
-
     }
 
-    public void AddImageUrlFormLocalRes(){
-
+    public void AddImageUrlFormLocalRes() {
 
 
         //  imageView = (ImageView) findViewById(R.id.imageView);

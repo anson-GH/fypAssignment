@@ -3,14 +3,13 @@ package com.example.winnie.fypassignment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -18,7 +17,6 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -28,11 +26,11 @@ import java.util.ArrayList;
  */
 
 public class ServerRequests {
-    ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15;
     public static final String SERVER_ADDRESS = "http://socialtainment.esy.es/";
+    ProgressDialog progressDialog;
 
-    public ServerRequests(Context context){
+    public ServerRequests(Context context) {
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Processing");
@@ -40,15 +38,17 @@ public class ServerRequests {
 
     }
 
-    public void storeUserDataInBackground(User user, GetUserCallBack userCallBack){
-    progressDialog.show();
+    public void storeUserDataInBackground(User user, GetUserCallBack userCallBack) {
+        progressDialog.show();
         new StoreUserDataAsyncTask(user, userCallBack).execute();
     }
-    public void fetchUserDataInBackground(User user, GetUserCallBack callBack){
+
+    public void fetchUserDataInBackground(User user, GetUserCallBack callBack) {
         progressDialog.show();
         new fetchUserDataAsyncTask(user, callBack).execute();
 
     }
+
     public class StoreUserDataAsyncTask extends AsyncTask<Void, Void, Void> {
         User user;
         GetUserCallBack userCallBack;
@@ -61,10 +61,9 @@ public class ServerRequests {
         @Override
         protected Void doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-              dataToSend.add(new BasicNameValuePair("username", user.username));
+            dataToSend.add(new BasicNameValuePair("username", user.username));
             dataToSend.add(new BasicNameValuePair("password", user.password));
-            dataToSend.add(new BasicNameValuePair("age", user.age +""));
-            dataToSend.add(new BasicNameValuePair("name", user.name));
+            dataToSend.add(new BasicNameValuePair("firebaseid", user.firebaseid));
             dataToSend.add(new BasicNameValuePair("email", user.email));
 
             HttpParams httpRequestParams = new BasicHttpParams();
@@ -90,6 +89,7 @@ public class ServerRequests {
             super.onPostExecute(aVoid);
         }
     }
+
     public class fetchUserDataAsyncTask extends AsyncTask<Void, Void, User> {
         User user;
         GetUserCallBack userCallBack;
@@ -105,6 +105,7 @@ public class ServerRequests {
             dataToSend.add(new BasicNameValuePair("username", user.username));
             dataToSend.add(new BasicNameValuePair("password", user.password));
 
+            System.out.println("hhhhhhhhhhhhhhhh    "+ user.username +" h "+ user.password );
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIMEOUT);
             HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIMEOUT);
@@ -114,7 +115,7 @@ public class ServerRequests {
 
             User returnedUser = null;
             try {
-               post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
 
                 HttpResponse httpResponse = client.execute(post);
 
@@ -125,11 +126,12 @@ public class ServerRequests {
                 if (jObject.length() == 0) {
                     user = null;
                 } else {
-                      String name = jObject.getString("name");
-                     int age = jObject.getInt("age");
+                    Log.v("happened", "2");
+                    String firebaseid = jObject.getString("firebaseid");
+                  //  int age = jObject.getInt("age");
                     String email = jObject.getString("email");
 
-                    returnedUser = new User(user.username, user.password,age,name,email);
+                    returnedUser = new User(user.username, user.password, email, firebaseid);
 
                 }
             } catch (Exception e) {
@@ -142,9 +144,9 @@ public class ServerRequests {
 
         @Override
         protected void onPostExecute(User returnedUser) {
+            super.onPostExecute(returnedUser);
             progressDialog.dismiss();
             userCallBack.done(returnedUser);
-            super.onPostExecute(returnedUser);
         }
 
     }

@@ -2,18 +2,16 @@ package com.example.winnie.fypassignment;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class RegisterActivity extends ActionBarActivity implements View.OnClickListener  {
+public class RegisterActivity extends ActionBarActivity implements View.OnClickListener {
 
     Button bRegister;
-    EditText etUsername, etPassword,etName,etAge,etEmail;
+    EditText etUsername, etPassword, etName, etAge, etEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +30,22 @@ public class RegisterActivity extends ActionBarActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.bRegister:
 
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                    int age = Integer.parseInt(etAge.getText().toString());
-                String name = etName.getText().toString();
+                String firebaseid = etName.getText().toString();
                 String email = etEmail.getText().toString();
 
-                User user = new User( username, password,age,name,email);
-
+                User user = new User(username, password, email, firebaseid);
                 registerUser(user);
                 break;
         }
 
     }
 
-    private void registerUser(User user){
+    private void registerUser(User user) {
         ServerRequests serverRequests = new ServerRequests(this);
         serverRequests.storeUserDataInBackground(user, new GetUserCallBack() {
             @Override

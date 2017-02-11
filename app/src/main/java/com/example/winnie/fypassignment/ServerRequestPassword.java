@@ -25,24 +25,26 @@ import java.util.ArrayList;
  */
 
 public class ServerRequestPassword {
-    ProgressDialog progressDialog;
     public static final int CONNECTION_TIMEOUT = 1000 * 15;
     public static final String SERVER_ADDRESS = "http://socialtainment.esy.es/";
+    ProgressDialog progressDialog;
 
-    public ServerRequestPassword(Context context){
+    public ServerRequestPassword(Context context) {
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Processing");
         progressDialog.setMessage("Please wait...");
 
     }
-    public void fetchUserDataInBackground(User user, GetUserCallBack callBack){
+
+    public void fetchUserDataInBackground(User user, GetUserCallBack callBack) {
         progressDialog.show();
-        System.out.println("hhhhhhhh "+user.email);
+        System.out.println("hhhhhhhh " + user.email);
 
         new ServerRequestPassword.fetchUserDataAsyncTask(user, callBack).execute();
 
     }
+
     public class fetchUserDataAsyncTask extends AsyncTask<Void, Void, User> {
         User user;
         GetUserCallBack userCallBack;
@@ -55,8 +57,7 @@ public class ServerRequestPassword {
         @Override
         protected User doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-           dataToSend.add(new BasicNameValuePair("email", user.email));
-            System.out.println("hhhaaaaaaaaaaahhhhh "+user.email);
+            dataToSend.add(new BasicNameValuePair("email", user.email));
 
 
             HttpParams httpRequestParams = new BasicHttpParams();
@@ -77,16 +78,14 @@ public class ServerRequestPassword {
                 JSONObject jObject = new JSONObject(result);
 
 
-
                 if (jObject.length() == 0) {
                     user = null;
                 } else {
 
-                   String username = jObject.getString("username");
+                    String username = jObject.getString("username");
                     String password = jObject.getString("password");
-                //  returnedUser = new User(username,password);
-                    returnedUser = new User(user.email,username,password);
-                   System.out.println("hhhaaaaaaaaaaahhhhh "+username +" sdf "+password );
+                    //  returnedUser = new User(username,password);
+                    returnedUser = new User(user.email, username, password);
 
                 }
             } catch (Exception e) {

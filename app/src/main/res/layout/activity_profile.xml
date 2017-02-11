@@ -12,22 +12,23 @@
     tools:context="com.example.winnie.fypassignment.ProfileActivity">
 
     <Button
-        android:text="Button"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/button" />
+        android:text="Button" />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="400dp"
         android:layout_height="400dp"
-        app:srcCompat="@drawable/common_full_open_on_phone"
-        android:id="@+id/imageView"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        app:srcCompat="@drawable/bg" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/img"/>
+        android:background="@drawable/img" />
 </RelativeLayout>

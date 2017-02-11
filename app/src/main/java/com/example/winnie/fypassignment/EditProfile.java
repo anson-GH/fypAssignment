@@ -1,5 +1,6 @@
 package com.example.winnie.fypassignment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -8,38 +9,55 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class ProfileActivity extends AppCompatActivity {
-
+public class EditProfile extends Activity {
+    EditText etContact, etCity, etAddress;
+    Button buttonSubmit;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    CircleImageView imageView;
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int GALLERY_PICTURE = 2;
     private Button button;
-    private ImageView imageView;
     private StorageReference mStorage;
     private ProgressDialog mProgress;
-
+    ImageView img;
+    Uri downloadUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_edit_profile);
+
+        etContact = (EditText) findViewById(R.id.etContact);
+        etAddress = (EditText) findViewById(R.id.etAddress);
+        etCity = (EditText) findViewById(R.id.etCity);
+        buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
+
+         img = (CircleImageView) findViewById(R.id.image);
+      //  img.setImageResource(R.drawable.m_tarc);
+       // img = (ImageView) findViewById(R.id.image);
 
         mStorage = FirebaseStorage.getInstance().getReference();
         mProgress = new ProgressDialog(this);
-        button = (Button) findViewById(R.id.button);
-        imageView = (ImageView) findViewById(R.id.imageView);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
+
+
+        img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startDialog();
@@ -48,8 +66,22 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    public void save(View view) {
+        // https://www.youtube.com/watch?v=nIaNdxXBKFY add data
+        databaseReference.child("name").setValue(etContact.getText().toString());
+        databaseReference.child("city").setValue(etAddress.getText().toString());
+        databaseReference.child("something").setValue(etCity.getText().toString());
+        databaseReference.child("download").setValue(downloadUri.toString());
+
+
+    }
+
+
+
+
+
     private void startDialog() {
-        AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(ProfileActivity.this);
+        AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(EditProfile.this);
         myAlertDialog.setTitle("Upload Pictures Option");
         myAlertDialog.setMessage("How do you want to set your picture?");
 
@@ -60,11 +92,13 @@ public class ProfileActivity extends AppCompatActivity {
 
                         pictureActionIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         try {
+
+
                             startActivityForResult(pictureActionIntent, GALLERY_PICTURE);
 
                         } catch (ActivityNotFoundException e) {
 // Do nothing for now
-                            Toast.makeText(ProfileActivity.this, "Your phone not support.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(EditProfile.this, "Your phone not support.", Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -78,13 +112,15 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivityForResult(intent, CAMERA_REQUEST_CODE);
                 } catch (ActivityNotFoundException e) {
 // Do nothing for now
-                    Toast.makeText(ProfileActivity.this, "Your phone not support.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditProfile.this, "Your phone not support.", Toast.LENGTH_LONG).show();
 
                 }
             }
         });
         myAlertDialog.show();
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -105,20 +141,21 @@ public class ProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             mProgress.dismiss();
-                            Uri downloadUri = taskSnapshot.getDownloadUrl();
-                            Picasso.with(ProfileActivity.this).load(downloadUri).fit().centerCrop().into(imageView);
-                            Toast.makeText(ProfileActivity.this, "Upload done....", Toast.LENGTH_LONG).show();
+                             downloadUri = taskSnapshot.getDownloadUrl();
+                            Picasso.with(EditProfile.this).load(downloadUri).fit().centerCrop().into(img);
+                            Toast.makeText(EditProfile.this, "Upload done....", Toast.LENGTH_LONG).show();
+
                         }
                     });
                 } catch (NullPointerException e) {
 // Do nothing for now
                     mProgress.dismiss();
-                    Toast.makeText(ProfileActivity.this, "Your phone not support.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditProfile.this, "Your phone not support.", Toast.LENGTH_LONG).show();
 
                 } catch (Exception e) {
 // Do nothing for now
                     mProgress.dismiss();
-                    Toast.makeText(ProfileActivity.this, "Your phone not support.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditProfile.this, "Your phone not support.", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -135,9 +172,9 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         mProgress.dismiss();
-                        Uri downloadUri = taskSnapshot.getDownloadUrl();
-                        Picasso.with(ProfileActivity.this).load(downloadUri).fit().centerCrop().into(imageView);
-                        Toast.makeText(ProfileActivity.this, "Upload done....", Toast.LENGTH_LONG).show();
+                         downloadUri = taskSnapshot.getDownloadUrl();
+                        Picasso.with(EditProfile.this).load(downloadUri).fit().centerCrop().into(img);
+                        Toast.makeText(EditProfile.this, "Upload done....", Toast.LENGTH_LONG).show();
 
                     }
                 });

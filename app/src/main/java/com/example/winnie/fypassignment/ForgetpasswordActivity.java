@@ -1,23 +1,17 @@
 package com.example.winnie.fypassignment;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-public class ForgetpasswordActivity extends ActionBarActivity  implements View.OnClickListener{
+public class ForgetpasswordActivity extends ActionBarActivity implements View.OnClickListener {
 
     Button bSubmit;
     EditText etEmailRecovery;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,30 +24,30 @@ public class ForgetpasswordActivity extends ActionBarActivity  implements View.O
         etEmailRecovery = (EditText) findViewById(R.id.etEmailRecovery);
 
 
-
         bSubmit.setOnClickListener(this);
 
     }
+
     public void onClick(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.bSubmit:
 
                 String email = etEmailRecovery.getText().toString();
-                User user = new User(email,null,null);
+                User user = new User(email, null, null);
 
 
                 ServerRequestPassword serverRequestPassword = new ServerRequestPassword(this);
                 serverRequestPassword.fetchUserDataInBackground(user, new GetUserCallBack() {
                     @Override
                     public void done(User user) {
-                        if(user==null){
+                        if (user == null) {
                             etEmailRecovery.setError("Please enter valid password");
 
                             // Toast.makeText(ForgetpasswordActivity.this, "Invalid email!",Toast.LENGTH_LONG).show();
-                        }else{
+                        } else {
 
-                            sendEmail(user.email,user.username);
+                            sendEmail(user.email, user.username);
 
                         }
                     }
@@ -65,12 +59,13 @@ public class ForgetpasswordActivity extends ActionBarActivity  implements View.O
         }
 
     }
+
     public void sendEmail(String email, String username) {
         //Getting content for email
         String subject = "TAR University College Password Recovery";
         String message = username;
         //Creating SendMail object
-     SendMail sm = new SendMail(this, email, subject, message);
+        SendMail sm = new SendMail(this, email, subject, message);
 
         //Executing sendmail to send email
         sm.execute();

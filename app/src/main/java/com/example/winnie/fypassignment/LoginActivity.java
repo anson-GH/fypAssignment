@@ -1,27 +1,20 @@
 package com.example.winnie.fypassignment;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextClock;
 import android.widget.TextView;
 
-public class LoginActivity extends ActionBarActivity  implements View.OnClickListener {
+public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
 
 
     Button bLogin;
     EditText etUsername, etPassword;
-    TextView tvRegisterLink,tvForgotPassword;
+    TextView tvRegisterLink, tvForgotPassword;
     UserLocalStore userLocalStore;
 
     @Override
@@ -50,19 +43,19 @@ public class LoginActivity extends ActionBarActivity  implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.bLogin:
 
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                User user = new User(username,password);
+                User user = new User(username, password);
 
                 authenticate(user);
 
 
-              userLocalStore.storeUserData(user);
-              userLocalStore.setUserLoggedIn(true);
+                userLocalStore.storeUserData(user);
+                userLocalStore.setUserLoggedIn(true);
 
                 break;
 
@@ -76,38 +69,39 @@ public class LoginActivity extends ActionBarActivity  implements View.OnClickLis
 
     }
 
-    private void authenticate(User user){
-            ServerRequests serverRequests = new ServerRequests(this);
+    private void authenticate(User user) {
+        ServerRequests serverRequests = new ServerRequests(this);
         serverRequests.fetchUserDataInBackground(user, new GetUserCallBack() {
             @Override
             public void done(User returnedUser) {
-            if(returnedUser==null){
-                showErrorMessage();
-            }else{
-                logUserIn(returnedUser);
-            }
+                if (returnedUser == null) {
+                    showErrorMessage();
+                } else {
+                    logUserIn(returnedUser);
+                }
             }
         });
 
     }
 
-        private void showErrorMessage(){
+    private void showErrorMessage() {
 //            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginActivity.this);
 //            dialogBuilder.setMessage("Incorrect user details");
 //            dialogBuilder.setPositiveButton("OK",null);
 //            dialogBuilder.show();
 
-            etUsername.setError("Please enter valid username");
-            etPassword.setError("Please enter valid password");
+        etUsername.setError("Please enter valid username");
+       etPassword.setError("Please enter valid password");
 
-        }
-        private void logUserIn(User returnedUser){
-            userLocalStore.storeUserData(returnedUser);
-            userLocalStore.setUserLoggedIn(true);
-            startActivity(new Intent(this, MainActivity.class));
+    }
+
+    private void logUserIn(User returnedUser) {
+        userLocalStore.storeUserData(returnedUser);
+        userLocalStore.setUserLoggedIn(true);
+        startActivity(new Intent(this, MainActivity.class));
 
 
-        }
+    }
 
 }
 
