@@ -48,8 +48,8 @@ TextView tvsomething,tvdownload,tvname,tvcity;
                //     String name = map.get("name");
                 //    String something = map.get("something");
 
-   // System.out.println(city);
-                    tvcity.setText(city);
+   System.out.println(city);
+                //    tvcity.setText(city);
 //                    tvname.setText(name);
 //                    tvdownload.setText(download);
 //                    tvsomething.setText(something);

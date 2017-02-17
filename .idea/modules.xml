@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/fypAssignment.iml" filepath="$PROJECT_DIR$/fypAssignment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/itextpdf-5.3.2/itextpdf-5.3.2.iml" filepath="$PROJECT_DIR$/itextpdf-5.3.2/itextpdf-5.3.2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/svg-android-1.1/svg-android-1.1.iml" filepath="$PROJECT_DIR$/svg-android-1.1/svg-android-1.1.iml" />
     </modules>
   </component>
 </project>
